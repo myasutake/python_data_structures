@@ -133,3 +133,73 @@ class TestStack:
     def test_push_size(self, test_stack):
         test_stack.push('steamed')
         assert test_stack.size == 7
+
+class TestQueue:
+
+    @pytest.fixture(scope='function')
+    def test_queue(self):
+        x = data_structures.Queue()
+        x.enqueue('lorem')
+        x.enqueue('dim')
+        x.enqueue('sum')
+        x.enqueue('Cha')
+        x.enqueue('siu')
+        x.enqueue('bao')
+        return x
+
+    def test_dequeue_return_type(self, test_queue):
+        dequeued = test_queue.dequeue()
+        assert type(dequeued) == data_structures.Node
+
+    def test_dequeue_value(self, test_queue):
+        dequeued = test_queue.dequeue()
+        assert dequeued.data == 'lorem'
+        dequeued = test_queue.dequeue()
+        assert dequeued.data == 'dim'
+        dequeued = test_queue.dequeue()
+        assert dequeued.data == 'sum'
+
+    def test_dequeue_size(self, test_queue):
+        test_queue.dequeue()
+        assert test_queue.size == 5
+        test_queue.dequeue()
+        assert test_queue.size == 4
+        test_queue.dequeue()
+        assert test_queue.size == 3
+
+    def test_dequeue_empty(self):
+        test_queue = data_structures.Queue()
+        try:
+            dequeued = test_queue.dequeue()
+        except:
+            pass
+        else:
+            assert False, "Expected an exception; instead got a Node with value '{}'.".format(dequeued.data)
+
+    def test_enqueue_return_type(self, test_queue):
+        enqueued = test_queue.enqueue('steamed')
+        assert enqueued == None
+
+    def test_enqueue_size(self, test_queue):
+        test_queue.enqueue('steamed')
+        assert test_queue.size == 7
+
+    def test_peek_return_type(self, test_queue):
+        peeked = test_queue.peek()
+        assert type(peeked) == data_structures.Node
+
+    def test_peek_value(self, test_queue):
+        peeked = test_queue.peek()
+        assert peeked.data == 'lorem'
+        peeked = test_queue.peek()
+        assert peeked.data == 'lorem'
+        peeked = test_queue.peek()
+        assert peeked.data == 'lorem'
+
+    def test_peek_size(self, test_queue):
+        test_queue.peek()
+        assert test_queue.size == 6
+        test_queue.peek()
+        assert test_queue.size == 6
+        test_queue.peek()
+        assert test_queue.size == 6

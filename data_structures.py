@@ -145,3 +145,71 @@ class Stack:
             count += 1
             i_node = i_node.next
         return count
+
+class Queue:
+    '''
+    A linear collection of Nodes; first in, first out.
+    '''
+
+    def __init__(self):
+        self._front = None
+        self._back = None
+
+    def dequeue(self):
+        '''
+        Returns and removes the front Node of the Queue.
+        '''
+        if self.size == 0:
+            raise Exception('Attempted to dequeu an empty Queue.')
+        # Reference the front Node; it will be returned eventually.
+        return_node = self._front
+        # If only one Node, set front and back to None.
+        if self.size == 1:
+            self._front = None
+            self._back = None
+        else:
+            # Iterate through the Queue,
+            # Find 2nd-front Node (will become the new front).
+            i_node = self._back
+            while i_node != None:
+                # If the next Node is the front of the queue, we found it.
+                if i_node.next == self._front:
+                    # 'Delete' the next Node.
+                    i_node.next = None
+                    # 2nd-front becomes the new front.
+                    self._front = i_node
+                    break
+                i_node = i_node.next
+        return return_node
+
+    def enqueue(self, data):
+        '''
+        Adds a Node to the back of the Queue.
+        '''
+        # Create a new Node.
+        new_node = Node(data=data)
+        # If the Queue is empty, the new Node becomes the front.
+        if self._front == None: self._front = new_node
+        # Else, the new Node should point to the current back of the Queue.
+        else: new_node.next = self._back
+        # The new Node becomes the new back of the Queue.
+        self._back = new_node
+        pass
+
+    def peek(self):
+        '''
+        Returns the front Node without changing the Queue.
+        '''
+        return self._front
+
+    @property
+    def size(self):
+        '''
+        Size of the Queue.
+        '''
+        count = 0
+        i_node = self._back
+        while i_node != None:
+            count += 1
+            i_node = i_node.next
+        return count

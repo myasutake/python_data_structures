@@ -96,3 +96,52 @@ class LinkedList:
             prev_node = this_node
             this_node = this_node.next
         raise Exception("Could not find Node with data '{}'.".format(query))
+
+class Stack:
+    '''
+    A linear collection of Nodes; last in, first out.
+    '''
+
+    def __init__(self):
+        self._top = None
+
+    def peek(self):
+        '''
+        Returns the top Node without changing the Stack.
+        '''
+        return self._top
+
+    def pop(self):
+        '''
+        Returns and removes the top node from the Stack.
+        '''
+        top_node = self._top
+        if top_node == None:
+            raise Exception('Attempted to pop an empty Stack.')
+        second_top_node = top_node.next
+        # The 2nd top Node becomes the new top.
+        self._top = second_top_node
+        # 'Delete' the top Node and return it..
+        top_node.next = None
+        return top_node
+
+    def push(self, data):
+        '''
+        Pushes a new Node onto the Stack.
+        '''
+        # Create a new Node, point it to the current top Node.
+        new_node = Node(data=data, next_node=self._top)
+        # Make the new Node the top Node.
+        self._top = new_node
+
+    @property
+    def size(self):
+        '''
+        Size of the Stack.
+        '''
+        count = 0
+        i_node = self._top
+        while i_node != None:
+            count += 1
+            i_node = i_node.next
+        return count
